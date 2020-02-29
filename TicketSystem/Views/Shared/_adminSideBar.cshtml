@@ -1,0 +1,124 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+}
+<!-- PAGE ASIDE PANEL -->
+<div class="page-aside invert" id="page-aside">
+    <div class="scroll" style="max-height: 100%">
+        <div class="navigation" id="navigation-default">
+            <div class="user user--bordered user--lg user--w-lineunder user--controls">
+                <div class="user__name">
+                    <strong>@if (!string.IsNullOrEmpty(username)) { @username; }</strong><br /><span class="text-muted">Administrator</span>
+                    <div class="user__controls">
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm btn-icon"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <span class="fa fa-cog"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right"
+                                 aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Profile">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Logout">Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <ul>
+                <li class="title">Main</li>
+                <li>
+                    <a asp-controller="Home" asp-action="Index">
+                        <span class="icon li-home"></span>
+                        <span class="text">Dashboards</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="ClientOnBoard">
+                        <span class="icon li-user-plus"></span>
+                        <span class="text">OnBoard Client</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="ClientOnBoardSupport">
+                        <span class="icon li-telephone"></span>
+                        <span class="text">OnBoard Client Support</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="ProfileClientUser">
+                        <span class="icon li-profile"></span>
+                        <span class="text">Profile Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="RaisedTicket">
+                        <span class="icon li-ticket"></span>
+                        <span class="text">Tickets</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="Logout">
+                        <span class="icon li-toggle-off"></span>
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+                <li class="openable">
+                    <a href="#">
+                        <span class="icon li-document"></span>
+                        <span class="text">Pages</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="pages-gallery.html" class="no-icon"><span class="text">Gallery</span></a>
+                        </li>
+                        <li>
+                            <a href="pages-user-contacts.html" class="no-icon"><span class="text">User contacts</span></a>
+                        </li>
+                        <li>
+                            <a href="pages-user-profile.html" class="no-icon"><span class="text">User profile</span></a>
+                        </li>
+                        <li class="openable">
+                            <a href="#" class="no-icon"><span class="text">Payment</span></a>
+                            <ul>
+                                <li>
+                                    <a href="pages-payments-list.html" class="no-icon"><span class="text">List of invoices</span></a>
+                                </li>
+                                <li>
+                                    <a href="pages-payments-invoice.html" class="no-icon"><span class="text">Invoice</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="openable">
+                            <a href="#" class="no-icon"><span class="text">FAQ</span></a>
+                            <ul>
+                                <li>
+                                    <a href="pages-faq.html" class="no-icon"><span class="text">Example 1</span></a>
+                                </li>
+                                <li>
+                                    <a href="pages-faq-2.html" class="no-icon"><span class="text">Example 2</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="pages-contact-us.html" class="no-icon"><span class="text">Contact us</span></a>
+                        </li>
+                        <li>
+                            <a href="pages-calendar.html" class="no-icon"><span class="text">Calendar</span></a>
+                        </li>
+                        <li>
+                            <a href="pages-login.html" class="no-icon"><span class="text">Login page</span></a>
+                        </li>
+                        <li>
+                            <a href="pages-registration.html" class="no-icon"><span class="text">Registration</span></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- //END PAGE ASIDE PANEL -->

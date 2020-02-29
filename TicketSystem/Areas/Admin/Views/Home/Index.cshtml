@@ -1,0 +1,147 @@
+﻿@model TicketSystem.API.Domain.ViewModels.Clients
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- //END SIDEPANEL -->
+<!-- PAGE CONTENT CONTAINER -->
+<div class="content" id="content">
+    <!-- PAGE HEADING -->
+    <div class="page-heading">
+        <div class="page-heading__container">
+            <p class="caption">Welcome Estring</p>
+        </div>        
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Home" asp-action="Index">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Clients</li>     
+            </ol>
+        </nav>
+    </div>
+    <!-- //END PAGE HEADING -->
+    <div class="container-fluid">
+        <div class="row margin-bottom-20">
+            <div class="col-12 col-lg-3">
+                <div class="widget">
+                    <div class="widget__icon_layer widget__icon_layer--right">
+                        <span class="li-window"></span>
+                    </div>
+                    <div class="widget__container">
+                        <div class="widget__line">
+                            <div class="widget__icon">
+                                <span class="li-window"></span>
+                            </div>
+                            <div class="widget__title">Projects</div>
+                            <div class="widget__subtitle">
+                                Count of active projects
+                            </div>
+                        </div>
+                        <div class="widget__box widget__box--left">
+                            <div class="widget__informer">5 projects</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="widget">
+                    <div class="widget__icon_layer widget__icon_layer--right">
+                        <span class="li-users"></span>
+                    </div>
+                    <div class="widget__container">
+                        <div class="widget__line">
+                            <div class="widget__icon">
+                                <span class="li-users"></span>
+                            </div>
+                            <div class="widget__title">Users activity</div>
+                            <div class="widget__subtitle">Online operators</div>
+                        </div>
+                        <div class="widget__box widget__box--left">
+                            <div class="widget__informer">12 operators</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="widget">
+                    <div class="widget__icon_layer widget__icon_layer--right">
+                        <span class="li-receipt"></span>
+                    </div>
+                    <div class="widget__container">
+                        <div class="widget__line">
+                            <div class="widget__icon">
+                                <span class="li-receipt"></span>
+                            </div>
+                            <div class="widget__title">Open payments</div>
+                            <div class="widget__subtitle">Payments summary</div>
+                        </div>
+                        <div class="widget__box widget__box--left">
+                            <div class="widget__informer">
+                                6 payments for $2,485.00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="widget">
+                    <div class="widget__icon_layer widget__icon_layer--right">
+                        <span class="li-lifebuoy"></span>
+                    </div>
+                    <div class="widget__container">
+                        <div class="widget__line">
+                            <div class="widget__icon">
+                                <span class="li-lifebuoy"></span>
+                            </div>
+                            <div class="widget__title">Support tickets</div>
+                            <div class="widget__subtitle">
+                                Count of opened tickets
+                            </div>
+                        </div>
+                        <div class="widget__box widget__box--left">
+                            <div class="widget__informer">5 of 2,133</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card margin-bottom-0">
+            <div class="card-body">                
+                <div class="table-responsive margin-top-20">
+                    <table class="table table-bordered" cellspacing="0" width="100%" id="dt-example-buttons">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Details</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int counter = 1;
+                                if (Model != null)
+                                {
+                                    foreach (var item in Model.responseObject)
+                                    {
+                                    <tr>
+                                        <td>@counter</td>
+                                        <td>@item.name</td>
+                                        <td>@item.email</td>
+                                        <td><a class="btn btn-outline-info" asp-action="clientDetails" asp-route-clientEmail="@item.email">Details </a></td>
+                                        <td><a class="btn btn-outline-light" asp-action="editClient" asp-route-clientEmail="@item.email">Edit</a></td>
+                                        <td><a class="btn btn-outline-danger" asp-action="delete" asp-route-clientEmail="@item.email">Delete</a></td>
+                                    </tr>
+                                        counter++;
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //END PAGE CONTENT CONTAINER -->

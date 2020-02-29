@@ -1,0 +1,74 @@
+﻿@model TicketSystem.API.Domain.ViewModels.Authenticate
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string msg = (string)ViewData["msg"];
+}
+<div class="page">
+    <div class="page__content" id="page-content">
+        <div class="important-container login-container">
+            <div class="login-container__buttons login-container__buttons--right">
+                @if (!String.IsNullOrEmpty(msg))
+                {
+                    <p class="caption text-center margin-bottom-30" id="msg">
+                        @msg
+                    </p>
+                }
+            </div>
+            <div class="content">
+                <a href="index.html"
+                   class="logo-holder logo-holder--lg logo-holder--wide">
+                    <div class="logo-text">
+                        <strong class="text-primary">#</strong>
+                        <strong>TICKET SYSTEM</strong>
+                    </div>
+                </a>
+                <form asp-action="Login" autocomplete="on">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" placeholder="Your email" asp-for="username" required />
+                    </div>
+                    <div class="form-group margin-bottom-20">
+                        <label>Password</label>
+                        <input type="password" class="form-control" placeholder="Your password" autocomplete="new-password" asp-for="password" required />
+                    </div>
+                    <div class="form-group margin-bottom-30">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <a href="#">Forgot password?</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group margin-bottom-30">
+                        <div class="form-row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <button class="btn btn-primary btn-block">
+                                    Login
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="divider"></div>
+                <div class="form-group text-center">
+                    <div class="form-row">
+                        <div class="col-12">
+                            <a href="#" class="text-muted">Contacts</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content d-none d-lg-block" id="content" style="background:url(../assets/img/backgrounds/bridge.jpg) left center no-repeat; background-size: 100% auto">
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function(){
+                $("#msg").fadeOut();
+            }, 20000);
+    });
+    </script>
+}

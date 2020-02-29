@@ -1,0 +1,72 @@
+﻿@model TicketSystem.API.Domain.ViewModels.ClientVM
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    string msg = ViewBag.msg;
+}
+<!-- //END SIDEPANEL --><!-- PAGE CONTENT CONTAINER -->
+<div class="content" id="content">
+    <!-- PAGE HEADING -->
+    <div class="page-heading">
+        <div class="page-heading__container">
+            <p class="caption">Welcome Estring</p>
+        </div>
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Home" asp-action="Index">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Client Onboarding</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- //END PAGE HEADING -->
+    <div class="container-fluid">
+        <div class="form-row">
+            <div class="col-12 col-md-2"></div>
+            <div class="col-12 col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        @if (!string.IsNullOrEmpty(msg))
+                        {
+                            <p class="caption text-center margin-bottom-30" id="msg">
+                                @msg
+                            </p>
+                        }
+                        <form asp-action="ClientOnBoard" autocomplete="off">
+                            <div class="form-group">
+                                <label for="fullname">Fullname</label>
+                                <input type="text" class="form-control" placeholder="Your fullname" asp-for="name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" placeholder="Your personal email" asp-for="email" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNo">Phone No</label>
+                                <input type="text" class="form-control" placeholder="Your phone number" asp-for="phoneNumber" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <textarea type="text" class="form-control" rows="3" placeholder="Your address" asp-for="address" required></textarea>
+                            </div>
+                            <button class="btn btn-secondary">
+                                OnBoard
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-2"></div>
+        </div>
+    </div>
+</div>
+<!-- //END PAGE CONTENT CONTAINER -->
+@section scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function(){
+                $("#msg").fadeOut();
+            }, 20000);
+    });
+    </script>
+}

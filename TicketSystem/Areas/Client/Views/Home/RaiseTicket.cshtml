@@ -1,0 +1,80 @@
+﻿@model TicketSystem.API.Domain.ViewModels.TicketVM
+@using TicketSystem.API.Domain
+@{
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    ViewData["Title"] = "Raised Ticket";
+    string msg = (string)TempData["msg"];
+}
+
+<!-- PAGE CONTENT CONTAINER -->
+<div class="content" id="content">
+    <!-- PAGE HEADING -->
+    <div class="page-heading">
+        <div class="page-heading__container">
+            <p class="caption">Welcome Estring</p>
+        </div>
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Home" asp-action="Index">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Raised Ticket</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- //END PAGE HEADING -->
+    <div class="container-fluid">
+        <div class="form-row">
+            <div class="col-12 col-md-2"></div>
+            <div class="col-12 col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        @if (!string.IsNullOrEmpty(msg))
+                        {
+                            <p class="caption text-center margin-bottom-30" id="msg">
+                                @msg
+                            </p>
+                        }
+                    <form asp-action="RaiseTicket" method="post" autocomplete="off">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" placeholder="Your description" asp-for="ticket.description" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <textarea type="text" class="form-control" placeholder="Your note" asp-for="ticket.notes" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="requestType">Request Type</label>
+                            <select asp-for="requestType" class="form-control" asp-items="Html.GetEnumSelectList<Enums.RequestType>()" required>
+                                <option value="">Select Type</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priorityLevel">Priority Level</label>
+                            <select asp-for="priorityLevel" class="form-control" asp-items="Html.GetEnumSelectList<Enums.PriorityLevel>()" required>
+                                <option value="">Select Priority</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="client">Client</label>
+                            <select asp-for="ticket.client" class="form-control" required>
+                                <option value="">Select Client</option>
+                                @foreach (var item in Model.clients.responseObject)
+                                {
+                                    <option value="@item.email">@item.name</option>
+                                }
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary">
+                            Raise Ticket
+                        </button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-2"></div>
+        </div>
+    </div>
+</div>
+<!-- //END PAGE CONTENT CONTAINER -->
