@@ -16,13 +16,13 @@ namespace TicketSystem.API.Domain.ViewModels
     {
         public string id { get; set; }
         public string ticketId { get; set; }
-        public string clientId { get; set; }
+        public string client { get; set; }
         public string description { get; set; }
         public string openDate { get; set; }
         public string closeDate { get; set; }
-        public int requestType { get; set; }
-        public int ticketStatus { get; set; }
-        public int priorityLevel { get; set; }
+        public string requestType { get; set; }
+        public string ticketStatus { get; set; }
+        public string priorityLevel { get; set; }
         public string notes { get; set; }
     }
 }

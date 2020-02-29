@@ -114,9 +114,8 @@
                                 <th>TicketID</th>
                                 <th>Client</th>
                                 <th>Priority Level</th>
-                                <th>Date Opened</th>
+                                <th>Details</th>
                                 <th>Edit</th>
-                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,10 +129,8 @@
                                             <td>@item.ticketId</td>
                                             <td>@item.clientId</td>
                                             <td>@item.priorityLevel</td>
-                                            <td>@item.openDate</td>
                                             <td><a class="btn btn-outline-info" asp-action="ticketDetails" asp-route-ticketId="@item.ticketId">Details </a></td>
-                                            <td><a class="btn btn-outline-light" asp-action="editClient" asp-route-ticketId="@item.ticketId">Edit</a></td>
-                                            <td><a class="btn btn-outline-danger" asp-action="delete" asp-route-ticketId="@item.ticketId">Delete</a></td>
+                                            <td><a class="btn btn-outline-light" asp-action="updateTicket" asp-route-ticketId="@item.ticketId">Edit</a></td>
                                         </tr>
                                         counter++;
                                     }

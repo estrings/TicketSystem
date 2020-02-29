@@ -33,8 +33,7 @@ namespace TicketSystem.Controllers
 
         #region Login
         public IActionResult Login()
-        {
-            ViewData["Title"] = "Login";
+        {            
             return View();
         }
 
@@ -55,7 +54,7 @@ namespace TicketSystem.Controllers
                             ViewData["msg"] = $"Welcome {model.username.ToUpper()}";
                             string login = result.responseObject.authToken;
                             string username = result.responseObject.userObject.firstName + " " + result.responseObject.userObject.lastName;
-                            string _cID = clientUserDetails.responseObject.clientId;
+                            string _cID = clientUserDetails.responseObject.clientId ?? null;
                             var claims = new List<Claim>
                         {
                           new Claim(ClaimTypes.Authentication,result.responseObject.authToken),
@@ -65,14 +64,14 @@ namespace TicketSystem.Controllers
                             ClaimsPrincipal principal = new ClaimsPrincipal(authentication);
                             HttpContext.Session.SetString("Login", login);
                             HttpContext.Session.SetString("Username", username);
-                            HttpContext.Session.SetString("ClientID", _cID);
+                            if(_cID!=null) HttpContext.Session.SetString("ClientID", _cID);
                             return RedirectToAction(nameof(checkAccessType), new { accessType = result.responseObject.userObject.accessType});
                         }
                     }
                     else
                     {
                         _logger.LogInformation($"Login Unsuccessful....");
-                        ViewData["msg"] = $"Authentication failed for {model.username}";
+                        TempData["msg"] = $"Authentication failed for {model.username}";
                     }
                 }
                 else

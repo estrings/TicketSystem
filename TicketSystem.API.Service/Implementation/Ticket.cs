@@ -84,7 +84,7 @@ namespace TicketSystem.API.Service.Implementation
             Tickets res = null;
             try
             {
-                var endpoint = _configuration.GetSection("API").GetSection("getallticketsbyclientid").Value+"clientid="+clientID;
+                var endpoint = _configuration.GetSection("API").GetSection("getallticketsbyclientid").Value+"clientId="+clientID;
                 HttpClient client = _apiHelper.InitializeClient();
                 var response = await client.GetAsync(endpoint);
                 if (response.IsSuccessStatusCode)
@@ -118,6 +118,36 @@ namespace TicketSystem.API.Service.Implementation
                 var json = JsonConvert.SerializeObject(model.ticket);
                 HttpContent raiseTicket = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(endpoint, raiseTicket);
+                if (response.IsSuccessStatusCode)
+                {
+                    res = JsonConvert.DeserializeObject<GenericResponse>(await response.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    res = JsonConvert.DeserializeObject<GenericResponse>(await response.Content.ReadAsStringAsync());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"{ex?.InnerException?.InnerException?.Message}");
+            }
+            return res;
+        }
+
+        public async Task<GenericResponse> UpdateTicket(TicketUpdateVM model)
+        {
+            GenericResponse res = null;
+            try
+            {
+                string _requestType = Enum.GetName(typeof(RequestType), Convert.ToInt32(model.ticketDetail.responseObject.requestType));
+                string _priorityLevel = Enum.GetName(typeof(PriorityLevel), Convert.ToInt32(model.ticketDetail.responseObject.priorityLevel));
+                model.ticketDetail.responseObject.requestType = _requestType;
+                model.ticketDetail.responseObject.priorityLevel = _priorityLevel;
+                var endpoint = _configuration.GetSection("API").GetSection("updateticket").Value;
+                HttpClient client = _apiHelper.InitializeClient();
+                var json = JsonConvert.SerializeObject(model.ticketDetail);
+                HttpContent updateTicket = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(endpoint, updateTicket);
                 if (response.IsSuccessStatusCode)
                 {
                     res = JsonConvert.DeserializeObject<GenericResponse>(await response.Content.ReadAsStringAsync());

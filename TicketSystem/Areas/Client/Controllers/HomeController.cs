@@ -135,6 +135,60 @@ namespace TicketSystem.Areas.Client.Controllers
             }
             return View(ticketDetail);
         }
+
+        public async Task<IActionResult> UpdateTicket(string ticketId)
+        {
+            TicketUpdateVM ticketUpdateVM = new TicketUpdateVM();
+            bool _checkSession = CheckSession();
+            if (_checkSession) return RedirectToAction(nameof(Logout));
+            try
+            {
+                ticketUpdateVM.ticketDetail = await _ticket.GetTicket(ticketId);
+                ticketUpdateVM.clients = await _client.GetAllClients();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex?.InnerException?.InnerException?.Message}");
+            }
+            return View(ticketUpdateVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateTicket(TicketUpdateVM model)
+        {
+            bool _checkSession = CheckSession();
+            if (_checkSession) return RedirectToAction(nameof(Logout));
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = await _ticket.UpdateTicket(model);
+                    if (result != null)
+                    {
+                        _logger.LogInformation($"ticket updated successfully....");
+                        TempData["msg"] = $"Ticket updated successfully";
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"could not update ticket....");
+                        TempData["msg"] = $"Internal Server Error";
+                        return RedirectToAction(nameof(UpdateTicket), new { ticketId = model.ticketDetail.responseObject.ticketId});
+                    }
+                }
+                else
+                {
+                    _logger.LogInformation($"Invalid model state....", model.clients);
+                    ViewBag.msg = $"Please fill out all fields";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex?.InnerException?.InnerException?.Message}");
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
         #endregion        
 
         #region check session

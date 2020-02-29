@@ -117,17 +117,57 @@
                                 <div class="user__name">
                                     Client Name:<strong>
                                         @if (Model.responseObject != null)
-                                        {@Model.responseObject.clientId}
+                                        {@Model.responseObject.client}
                                     </strong><br /><span class="text-muted">
                                         Email: <b>
                                             @if (Model.responseObject != null)
-                                            {@Model.responseObject.clientId}
+                                            {@Model.responseObject.client}
                                         </b>
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div class="row margin-bottom-20 text-center">
+                            <div class="col-12">
+                                <p class="margin-bottom-10">
+                                    Ticket Description:
+                                    <b>
+                                        @if (Model.responseObject != null)
+                                        {@Model.responseObject.description;
+                                    }
+                                    </b>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="margin-bottom-10">
+                                    Request Type:
+                                    <b>
+                                        @if (Model.responseObject != null)
+                                        {@Model.responseObject.requestType;
+                                    }
+                                    </b>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="margin-bottom-10">
+                                    Ticket Status:
+                                    <b>
+                                        @if (Model.responseObject != null)
+                                        {@Model.responseObject.ticketStatus;
+                                    }
+                                    </b>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="margin-bottom-10">
+                                    Priority Level:
+                                    <b>
+                                        @if (Model.responseObject != null)
+                                        {@Model.responseObject.priorityLevel;
+                                    }
+                                    </b>
+                                </p>
+                            </div>
                             <div class="col-12">
                                 <p class="margin-bottom-10">
                                     Opened Date:
@@ -138,18 +178,13 @@
                                     </b>
                                 </p>
                             </div>
-                            <div class="col-12">
-                                <div class="text-muted margin-bottom-5">
-                                    Website: <b>www.client_web_adrress@domain.com</b>
-                                </div>
-                            </div>
                             @*<div class="col-12">
-                                    <div class="text-muted">
-                                        @if (Model.responseObject != null)
-                                        {@Model.responseObject.phoneNumber;
-                                    }
-                                    </div>
-                                </div>*@
+                <div class="text-muted">
+                    @if (Model.responseObject != null)
+                    {@Model.responseObject.phoneNumber;
+                }
+                </div>
+            </div>*@
                         </div>
                     </div>
                 </div>

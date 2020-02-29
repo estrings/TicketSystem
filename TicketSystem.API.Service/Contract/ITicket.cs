@@ -34,5 +34,12 @@ namespace TicketSystem.API.Service.Contract
         /// <param name="clientID"></param>
         /// <returns></returns>
         Task<Tickets> GetTicketByClientId(string clientID);
+
+        /// <summary>
+        /// updates client ticket
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<GenericResponse> UpdateTicket(TicketUpdateVM model);
     }
 }

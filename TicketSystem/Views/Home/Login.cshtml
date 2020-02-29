@@ -1,7 +1,8 @@
 ﻿@model TicketSystem.API.Domain.ViewModels.Authenticate
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string msg = (string)ViewData["msg"];
+    ViewData["Title"] = "Login";
+    string msg = (string)TempData["msg"];
 }
 <div class="page">
     <div class="page__content" id="page-content">
@@ -9,9 +10,7 @@
             <div class="login-container__buttons login-container__buttons--right">
                 @if (!String.IsNullOrEmpty(msg))
                 {
-                    <p class="caption text-center margin-bottom-30" id="msg">
-                        @msg
-                    </p>
+                    <p class="caption text-center margin-bottom-30" id="msg">@msg</p>
                 }
             </div>
             <div class="content">
