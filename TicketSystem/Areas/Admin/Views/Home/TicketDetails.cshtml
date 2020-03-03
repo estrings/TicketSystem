@@ -1,6 +1,7 @@
-﻿@model TicketSystem.API.Domain.ViewModels.TicketDetail
+﻿@model TicketSystem.API.Domain.ViewModels.AdminTicketDetailsVM
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Ticket Details";
 }
 <!-- //END SIDEPANEL -->
 <!-- PAGE CONTENT CONTAINER -->
@@ -9,7 +10,7 @@
     <div class="page-heading">
         <div class="page-heading__container">
             <h1 class="title">Client Profile</h1>
-            <p class="caption">Welcome Estring</p>
+            @*<p class="caption">Welcome Estring</p>*@
         </div>
         <nav aria-label="breadcrumb" role="navigation">
             <ol class="breadcrumb">
@@ -24,7 +25,7 @@
     <!-- //END PAGE HEADING -->
     <div class="container-fluid">
         <div class="row margin-bottom-20">
-            <div class="col-12 col-lg-3">
+            <div class="col-12 col-lg-2">
                 <div class="widget">
                     <div class="widget__icon_layer widget__icon_layer--right">
                         <span class="li-window"></span>
@@ -34,74 +35,110 @@
                             <div class="widget__icon">
                                 <span class="li-window"></span>
                             </div>
-                            <div class="widget__title">Projects</div>
+                            <div class="widget__title">Clients</div>
                             <div class="widget__subtitle">
-                                Count of active projects
+                                Count of clients
                             </div>
-                        </div>
-                        <div class="widget__box widget__box--left">
-                            <div class="widget__informer">5 projects</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="widget">
-                    <div class="widget__icon_layer widget__icon_layer--right">
-                        <span class="li-users"></span>
-                    </div>
-                    <div class="widget__container">
-                        <div class="widget__line">
-                            <div class="widget__icon">
-                                <span class="li-users"></span>
-                            </div>
-                            <div class="widget__title">Users activity</div>
-                            <div class="widget__subtitle">Online operators</div>
-                        </div>
-                        <div class="widget__box widget__box--left">
-                            <div class="widget__informer">12 operators</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="widget">
-                    <div class="widget__icon_layer widget__icon_layer--right">
-                        <span class="li-receipt"></span>
-                    </div>
-                    <div class="widget__container">
-                        <div class="widget__line">
-                            <div class="widget__icon">
-                                <span class="li-receipt"></span>
-                            </div>
-                            <div class="widget__title">Open payments</div>
-                            <div class="widget__subtitle">Payments summary</div>
                         </div>
                         <div class="widget__box widget__box--left">
                             <div class="widget__informer">
-                                6 payments for $2,485.00
+                                @if (Model.getClientCount >= 0)
+                                {
+                                    @Model.getClientCount;
+                                } Clients
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-3">
+            <div class="col-12 col-lg-2">
                 <div class="widget">
                     <div class="widget__icon_layer widget__icon_layer--right">
-                        <span class="li-lifebuoy"></span>
+                        <span class="li-window"></span>
                     </div>
                     <div class="widget__container">
                         <div class="widget__line">
                             <div class="widget__icon">
-                                <span class="li-lifebuoy"></span>
+                                <span class="li-window"></span>
                             </div>
-                            <div class="widget__title">Support tickets</div>
-                            <div class="widget__subtitle">
-                                Count of opened tickets
-                            </div>
+                            <div class="widget__title">Ticket Count</div>
                         </div>
                         <div class="widget__box widget__box--left">
-                            <div class="widget__informer">5 of 2,133</div>
+                            <div class="widget__informer">
+                                @if (Model.getTicketCount >= 0)
+                                {
+                                    @Model.getTicketCount;
+                                } Tickets
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-2">
+                <div class="widget">
+                    <div class="widget__icon_layer widget__icon_layer--right">
+                        <span class="li-window"></span>
+                    </div>
+                    <div class="widget__container">
+                        <div class="widget__line">
+                            <div class="widget__icon">
+                                <span class="li-window"></span>
+                            </div>
+                            <div class="widget__title">Open Tickets</div>
+                        </div>
+                        <div class="widget__box widget__box--left">
+                            <div class="widget__informer">
+                                @if (Model.getOpenTicketCount >= 0)
+                                {
+                                    @Model.getOpenTicketCount;
+                                } Open Tickets
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-2">
+                <div class="widget">
+                    <div class="widget__icon_layer widget__icon_layer--right">
+                        <span class="li-window"></span>
+                    </div>
+                    <div class="widget__container">
+                        <div class="widget__line">
+                            <div class="widget__icon">
+                                <span class="li-window"></span>
+                            </div>
+                            <div class="widget__title">Pending Tickets</div>
+                        </div>
+                        <div class="widget__box widget__box--left">
+                            <div class="widget__informer">
+                                @if (Model.getTicketInProgressCount >= 0)
+                                {
+                                    @Model.getTicketInProgressCount;
+                                }  Pending Tickets
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-2">
+                <div class="widget">
+                    <div class="widget__icon_layer widget__icon_layer--right">
+                        <span class="li-window"></span>
+                    </div>
+                    <div class="widget__container">
+                        <div class="widget__line">
+                            <div class="widget__icon">
+                                <span class="li-window"></span>
+                            </div>
+                            <div class="widget__title">Closed Tickets</div>
+                        </div>
+                        <div class="widget__box widget__box--left">
+                            <div class="widget__informer">
+                                @if (Model.getClosedTicketCount >= 0)
+                                {
+                                    @Model.getClosedTicketCount;
+                                } Closed Tickets
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,12 +153,12 @@
                             <div class="user user--rounded user--bordered user--lg margin-bottom-0">
                                 <div class="user__name">
                                     Client Name:<strong>
-                                        @if (Model.responseObject != null)
-                                        {@Model.responseObject.client}
+                                        @if (Model.ticketDetail.responseObject != null)
+                                        {@Model.ticketDetail.responseObject.client}
                                     </strong><br /><span class="text-muted">
                                         Email: <b>
-                                            @if (Model.responseObject != null)
-                                            {@Model.responseObject.client}
+                                            @if (Model.ticketDetail.responseObject != null)
+                                            {@Model.ticketDetail.responseObject.client}
                                         </b>
                                     </span>
                                 </div>
@@ -132,8 +169,8 @@
                                 <p class="margin-bottom-10">
                                     Ticket Description:
                                     <b>
-                                        @if (Model.responseObject != null)
-                                        {@Model.responseObject.description;
+                                        @if (Model.ticketDetail.responseObject != null)
+                                        {@Model.ticketDetail.responseObject.description;
                                     }
                                     </b>
                                 </p>
@@ -142,8 +179,8 @@
                                 <p class="margin-bottom-10">
                                     Request Type:
                                     <b>
-                                        @if (Model.responseObject != null)
-                                        {@Model.responseObject.requestType;
+                                        @if (Model.ticketDetail.responseObject != null)
+                                        {@Model.ticketDetail.responseObject.requestType;
                                     }
                                     </b>
                                 </p>
@@ -152,8 +189,8 @@
                                 <p class="margin-bottom-10">
                                     Ticket Status:
                                     <b>
-                                        @if (Model.responseObject != null)
-                                        {@Model.responseObject.ticketStatus;
+                                        @if (Model.ticketDetail.responseObject != null)
+                                        {@Model.ticketDetail.responseObject.ticketStatus;
                                     }
                                     </b>
                                 </p>
@@ -162,8 +199,8 @@
                                 <p class="margin-bottom-10">
                                     Priority Level:
                                     <b>
-                                        @if (Model.responseObject != null)
-                                        {@Model.responseObject.priorityLevel;
+                                        @if (Model.ticketDetail.responseObject != null)
+                                        {@Model.ticketDetail.responseObject.priorityLevel;
                                     }
                                     </b>
                                 </p>
@@ -172,19 +209,19 @@
                                 <p class="margin-bottom-10">
                                     Opened Date:
                                     <b>
-                                        @if (Model.responseObject != null)
-                                        {@Model.responseObject.openDate;
+                                        @if (Model.ticketDetail.responseObject != null)
+                                        {@Model.ticketDetail.responseObject.openDate;
                                     }
                                     </b>
                                 </p>
                             </div>
                             @*<div class="col-12">
-                <div class="text-muted">
-                    @if (Model.responseObject != null)
-                    {@Model.responseObject.phoneNumber;
-                }
-                </div>
-            </div>*@
+                                <div class="text-muted">
+                                    @if (Model.responseObject != null)
+                                    {@Model.responseObject.phoneNumber;
+                                }
+                                </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>

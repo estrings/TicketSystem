@@ -106,18 +106,24 @@ namespace TicketSystem.Areas.Admin.Controllers
 
         public async Task<IActionResult> clientDetails(string clientEmail)
         {
-            ClientProfile clientProfile = null;
+            AdminClientProfileVM adminClientProfileVM = new AdminClientProfileVM();
             bool _checkSession = CheckSession();
             if (_checkSession) return RedirectToAction(nameof(Logout));
             try
             {
-                clientProfile = await _client.ClientProfile(clientEmail);
+                adminClientProfileVM.clientProfile = await _client.ClientProfile(clientEmail);
+                adminClientProfileVM.getClientCount = await _admin.GetClientCount() ?? 0;
+                adminClientProfileVM.getTicketCount = await _admin.GetTicketCount() ?? 0;
+                adminClientProfileVM.getOpenTicketCount = await _admin.GetOpenTicketCount() ?? 0;
+                adminClientProfileVM.getClosedTicketCount = await _admin.GetClosedTicketCount() ?? 0;
+                adminClientProfileVM.getTicketInProgressCount = await _admin.GetTicketInProgressCount() ?? 0;
+
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex?.InnerException?.InnerException?.Message}");
             }
-            return View(clientProfile);
+            return View(adminClientProfileVM);
         }
 
         #endregion
@@ -203,18 +209,24 @@ namespace TicketSystem.Areas.Admin.Controllers
 
         public async Task<IActionResult> TicketDetails(string ticketId)
         {
-            TicketDetail ticketDetail = null;
+            AdminTicketDetailsVM adminTicketDetails = new AdminTicketDetailsVM();
             bool _checkSession = CheckSession();
             if (_checkSession) return RedirectToAction(nameof(Logout));
             try
             {
-                ticketDetail = await _ticket.GetTicket(ticketId);
+               adminTicketDetails.ticketDetail = await _ticket.GetTicket(ticketId);
+               adminTicketDetails.getClientCount = await _admin.GetClientCount() ?? 0;
+               adminTicketDetails.getTicketCount = await _admin.GetTicketCount() ?? 0;
+               adminTicketDetails.getOpenTicketCount = await _admin.GetOpenTicketCount() ?? 0;
+               adminTicketDetails.getClosedTicketCount = await _admin.GetClosedTicketCount() ?? 0;
+               adminTicketDetails.getTicketInProgressCount = await _admin.GetTicketInProgressCount() ?? 0;
+
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex?.InnerException?.InnerException?.Message}");
             }
-            return View(ticketDetail);
+            return View(adminTicketDetails);
         }
         #endregion
 
