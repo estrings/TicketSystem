@@ -4,6 +4,6 @@
     {
         public int responseCode { get; set; }
         public int recordCount { get; set; }
-        public string responseMessage { get; set; }
+        public string respMessage { get; set; }
     }
 }

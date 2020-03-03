@@ -19,6 +19,8 @@ namespace TicketSystem
             services.AddTransient<IClient,Client>();
             //Ticket Service
             services.AddTransient<ITicket,Ticket>();
+            //Admin Service
+            services.AddTransient<IAdmin,Admin>();
             //password encrypt service
             services.AddTransient<IBase64Helper,Base64Helper>();
             return services;

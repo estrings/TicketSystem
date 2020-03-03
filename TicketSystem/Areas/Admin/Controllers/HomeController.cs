@@ -21,33 +21,40 @@ namespace TicketSystem.Areas.Admin.Controllers
         private readonly IUser _user;
         private readonly IClient _client;
         private readonly ITicket _ticket;
+        private readonly IAdmin _admin;
         #endregion
 
         #region constructor
-        public HomeController(ILogger<HomeController> logger, IUser user,IClient client,ITicket ticket)
+        public HomeController(ILogger<HomeController> logger, IUser user,IClient client,ITicket ticket,IAdmin admin)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _user = user ?? throw new ArgumentNullException(nameof(user));
             _client = client ?? throw new ArgumentException(nameof(client));
             _ticket = ticket ?? throw new ArgumentNullException(nameof(ticket));
+            _admin = admin ?? throw new ArgumentNullException(nameof(admin));
         }
         #endregion
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            Clients allClients = null;
+            AdminVM adminView = new AdminVM();            
             bool _checkSession = CheckSession();
             if (_checkSession)return RedirectToAction(nameof(Logout));            
             try
             {
-                allClients = await _client.GetAllClients();
+                adminView.clients = await _client.GetAllClients();
+                adminView.getClientCount = await _admin.GetClientCount() ?? 0;
+                adminView.getTicketCount = await _admin.GetTicketCount() ?? 0;
+                adminView.getOpenTicketCount = await _admin.GetOpenTicketCount() ?? 0;
+                adminView.getClosedTicketCount = await _admin.GetClosedTicketCount() ?? 0;
+                adminView.getTicketInProgressCount = await _admin.GetTicketInProgressCount() ?? 0;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex?.InnerException?.InnerException?.Message}");
             }
-            return View(allClients);
+            return View(adminView);
         }
 
         #region client
@@ -175,18 +182,23 @@ namespace TicketSystem.Areas.Admin.Controllers
         #region Ticket
         public async Task<IActionResult> RaisedTicket()
         {
-            Tickets tickets = null;
+            AdminTicketVM adminTicketVM = new AdminTicketVM();            
             bool _checkSession = CheckSession();
             if (_checkSession) return RedirectToAction(nameof(Logout));
             try
             {
-                tickets = await _ticket.GetAllTicket();
+                adminTicketVM.tickets = await _ticket.GetAllTicket();
+                adminTicketVM.getClientCount = await _admin.GetClientCount() ?? 0;
+                adminTicketVM.getTicketCount = await _admin.GetTicketCount() ?? 0;
+                adminTicketVM.getOpenTicketCount = await _admin.GetOpenTicketCount() ?? 0;
+                adminTicketVM.getClosedTicketCount = await _admin.GetClosedTicketCount() ?? 0;
+                adminTicketVM.getTicketInProgressCount = await _admin.GetTicketInProgressCount() ?? 0;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex?.InnerException?.InnerException?.Message}");
             }
-            return View(tickets);
+            return View(adminTicketVM);
         }
 
         public async Task<IActionResult> TicketDetails(string ticketId)
