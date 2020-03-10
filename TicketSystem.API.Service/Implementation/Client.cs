@@ -10,6 +10,7 @@ using TicketSystem.API.Common.Communication;
 using TicketSystem.API.Common.Helpers;
 using TicketSystem.API.Domain.ViewModels;
 using TicketSystem.API.Service.Contract;
+using static TicketSystem.API.Domain.Enums;
 
 namespace TicketSystem.API.Service.Implementation
 {
@@ -140,7 +141,36 @@ namespace TicketSystem.API.Service.Implementation
             }
             return res;
         }
-       
+
+        public async Task<GenericResponse> RegisterSupport(Support model)
+        {
+            GenericResponse res = null;
+            try
+            {
+                string _accessType = Enum.GetName(typeof(AccessType), Convert.ToInt32(model.accessType));
+                model.accessType = _accessType;
+                model.password = _base64Helper.convertToBase64(model.password);
+                var endpoint = _configuration.GetSection("API").GetSection("registerUser").Value;
+                HttpClient client = _apiHelper.InitializeClient();
+                var json = JsonConvert.SerializeObject(model);
+                HttpContent registrationDetails = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(endpoint, registrationDetails);
+                if (response.IsSuccessStatusCode)
+                {
+                    res = JsonConvert.DeserializeObject<GenericResponse>(await response.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    res = JsonConvert.DeserializeObject<GenericResponse>(await response.Content.ReadAsStringAsync());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"{ex?.InnerException?.InnerException?.Message}");
+            }
+            return res;
+        }
+
 
         Task<GenericResponse> IClient.UpdateClient(ClientVM model)
         {

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using TicketSystem.API.Domain.Domain;
 using TicketSystem.API.Domain.ViewModels;
@@ -126,6 +125,48 @@ namespace TicketSystem.Areas.Admin.Controllers
             return View(adminClientProfileVM);
         }
 
+        public IActionResult OnBoardClientSupport()
+        {
+            bool _checkSession = CheckSession();
+            if (_checkSession) return RedirectToAction(nameof(Logout));
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OnBoardClientSupport(Support model)
+        {
+            bool _checkSession = CheckSession();
+            if (_checkSession) return RedirectToAction(nameof(Logout));
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = await _client.RegisterSupport(model);
+                    if (result.responseCode == 200)
+                    {
+                        _logger.LogInformation($"Support creation Successful....");
+                        TempData["msg"] = $"Support: {model.firstName +" "+model.lastName} with created successfully";
+                        return RedirectToAction(nameof(OnBoardClientSupport));
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"Support creation was Unsuccessful....");
+                        TempData["msg"] = $"Could not create support: {model.firstName +" "+model.lastName}";
+                    }
+                }
+                else
+                {
+                    _logger.LogInformation($"Invalid model state....", model);
+                    TempData["msg"] = $"Please fill out all fields";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex?.InnerException?.InnerException?.Message}");
+            }
+            return RedirectToAction(nameof(OnBoardClientSupport));
+        }
+
         #endregion
 
         #region Profile Client Users
@@ -228,6 +269,7 @@ namespace TicketSystem.Areas.Admin.Controllers
             }
             return View(adminTicketDetails);
         }
+
         #endregion
 
         #region check session

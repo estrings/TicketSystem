@@ -8,6 +8,7 @@ namespace TicketSystem.API.Domain.Domain
     {
         public const string Admin = "Administrator";
         public const string Client = "Client";
+        public const string SupportClient = "Support";
         public const string Office = "Office";
     }
 }

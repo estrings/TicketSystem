@@ -154,7 +154,7 @@
                                 <th>Priority Level</th>
                                 <th>Date Opened</th>
                                 <th>Details</th>
-                                <th>Edit</th>
+                                <th>Assign Ticket</th>
                                 @*<th>Delete</th>*@
                             </tr>
                         </thead>
@@ -171,7 +171,7 @@
                                             <td>@item.priorityLevel</td>
                                             <td>@item.openDate</td>
                                             <td><a class="btn btn-outline-info" asp-action="ticketDetails" asp-route-ticketId="@item.ticketId">Details </a></td>
-                                            <td><a class="btn btn-outline-light disabled" asp-action="editClient" asp-route-ticketId="@item.ticketId">Edit</a></td>
+                                            <td><a class="btn btn-outline-light" asp-action="editClient" asp-route-ticketId="@item.ticketId">Assign</a></td>
                                             @*<td><a class="btn btn-outline-danger" asp-action="delete" asp-route-ticketId="@item.ticketId">Delete</a></td>*@
                                         </tr>
                                         counter++;

@@ -21,6 +21,13 @@ namespace TicketSystem.API.Service.Contract
         Task<GenericResponse> RegisterClient(ClientVM model);
 
         /// <summary>
+        /// registers a support team member
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<GenericResponse> RegisterSupport(Support model);
+
+        /// <summary>
         /// update client details
         /// </summary>
         /// <param name="model"></param>

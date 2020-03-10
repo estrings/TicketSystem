@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,6 +13,10 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using TicketSystem.API.Domain;
 
 namespace TicketSystem
@@ -21,6 +26,7 @@ namespace TicketSystem
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
         }
 
         public IConfiguration Configuration { get; }
@@ -74,8 +80,10 @@ namespace TicketSystem
         }
 
         //This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        [Obsolete]
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,ILoggerFactory loggerFactory)
         {
+            env.ConfigureNLog("nlog.config");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,12 +93,15 @@ namespace TicketSystem
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-                                 
+            //add NLog to ASP.NET Core
+            loggerFactory.AddNLog();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseCors();
-            app.UseSession();            
+            app.UseSession();
+            //add NLog.Web
+            app.AddNLogWeb();
 
             app.UseMvc(routes =>
             {
